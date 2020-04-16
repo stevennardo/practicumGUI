@@ -117,67 +117,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/home_inject.js":[function(require,module,exports) {
-var contactTable = document.createElement('table');
-contactTable.id = "contactTable";
-var container = document.getElementById('container');
-container.appendChild(contactTable);
-var dataset = fetch();
-
-window.onload = function () {
-  if (dataset === "DNE") {
-    contactTable.innerHTML = "No contacts currently exist.";
-  } else {
-    contactTable.innerHTML = "";
-
-    for (var item in dataset) {
-      contactTable.appendChild(buildName(item));
-    }
-  }
-}; //TODO: Finalize linked contacts
-
-
-function buildContact(contactData) {
-  var row = document.createElement('tr');
-  var contactHolder = document.createElement('td');
-  var contact = document.createElement('div');
-  contact.innerHTML = "\n<table id='newcontact'>\n                \n                <tr>\n                    <td>Name: ".concat(contactData.name, "</td>\n                </tr>\n                <tr>\n                    <td>Number: ").concat(contactData.number, "</td>\n                </tr>\n                <tr>\n                    <td>Email: ").concat(contactData.email, "</td>\n                </tr>\n                <tr>\n                    <td>Address: ").concat(contactData.address, "</td>\n                </tr>\n                <tr>\n                    <td>City: ").concat(contactData.city, "</td>   \n                </tr>\n                <tr>\n                    <td>State: ").concat(contactData.state, "</td>\n                </tr>\n                <tr>\n                    <td>Zip Code: ").concat(contactData.zip, "</td>  \n                </tr>\n                <tr>\n                    <td>Birthday: ").concat(contactData.birthday, "</td>\n                </tr>\n                <tr>\n                    <td>Linked Contacts: ").concat(linkedForHome(contactData.linked), "</td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"sendToUpdate(").concat(contactData.id, ")\" id='sendToUpdate'>Update Contact</button></td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"deleteContact(").concat(contactData.id, ")\" id='delete'>Delete Contact</button></td>\n                </tr>\n            </table>\n");
-  contactHolder.appendChild(contact);
-  row.appendChild(contactHolder);
-  return row;
-}
-
-function buildName(contactData) {
-  var row = document.createElement('tr');
-  var contactHolder = document.createElement('td');
-  var contact = document.createElement('div');
-  contact.innerHTML = "\n                <tr>\n                    <td id=\"".concat(contactData.id, "\" onclick=\"injectContact(").concat(contactData, ")\">").concat(contactData.name, "</td>\n                </tr>\n        ");
-  contactHolder.appendChild(contact);
-  row.appendChild(contactHolder);
-  return row;
-}
-
-function injectContact(contactData) {
-  var td = document.getElementById(contactData.id);
-  td.innerHTML = "";
-  td.appendChild(buildContact(contactData));
-}
-
-function linkedForHome(linkedID) {
-  var linkedIDs = linkedID.split(" ");
-  var ul = document.createElement("ul");
-
-  for (var item in linkedIDs) {
-    for (var data in dataset) {
-      if (data.id === item) {
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(data.name));
-        ul.appendChild(li);
-      }
-    }
-  }
-
-  return ul;
+})({"js/sendToUpdate.js":[function(require,module,exports) {
+function sendToUpdate(id) {
+  sessionStorage.setItem('ToBeUpdated', id);
+  window.location.href = "updateContact.html";
 }
 },{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -207,7 +150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52175" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60672" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -383,5 +326,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/home_inject.js"], null)
-//# sourceMappingURL=/home_inject.a3b30b41.js.map
+},{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","js/sendToUpdate.js"], null)
+//# sourceMappingURL=/sendToUpdate.801eb2e5.js.map

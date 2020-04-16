@@ -119,7 +119,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/fetchDataSet.js":[function(require,module,exports) {
 function fetch() {
-  var requestURL = "http://localhost:8080/fetch"; //send API call of the user (query)
+  var requestURL = "http://localhost:8080/fetch/"; //send API call of the user (query)
 
   var sendRequest = new XMLHttpRequest(); // Open a new connection, using the GET request on the URL endpoint
 
@@ -181,7 +181,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60672" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52175" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,6 +1,6 @@
 function fetch()
 {
-    var requestURL = "http://localhost:8080/fetch";
+    var requestURL = "http://localhost:8080/fetch/";
 
 //send API call of the user (query)
     var sendRequest = new XMLHttpRequest();

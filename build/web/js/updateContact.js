@@ -26,13 +26,29 @@ window.onload = function () {
     document.getElementById('state').value = item.state;
     document.getElementById('zip').value = item.zip;
     document.getElementById('bday').value = item.bday;
-    
-    //document.getElementById('linked').value = item.linked;
+    document.getElementById('linked').value = item.linked;
 };
 
 function updateContact() {
 
     console.log("UPDATE CONTACT SUBMIT");
+
+    var linkedString = document.getElementById('bday').value;
+    linkedString = linkedString.split(",");
+    var linkedIDs;
+
+    var dataSet = fetch();
+    for (var link in linkedString)
+    {
+        for (var data in dataSet)
+        {
+            if (data.name === link)
+            {
+                linkedIDs.push(data.id);
+            }
+        }
+    }
+
     var contact = {
         id: sessionStorage.getItem('ToBeUpdated'),
         name: document.getElementById('name').value,
@@ -43,15 +59,15 @@ function updateContact() {
         state: document.getElementById('state').value,
         zip: document.getElementById('zip').value,
         bday: document.getElementById('bday').value,
-        linked: ""
+        linked: linkedIDs.join(" ")
     };
 
-    sendContact(contact);
+    updateContact(contact);
 //make API call to send data to the db
 }
 ;
 
-function sendContact(contact)
+function updateContact(contact)
 {
     //******* DUMMY URL THIS CODE WILL NOT WORK
     //awaiting legitimate GCP URL

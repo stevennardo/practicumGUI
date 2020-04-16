@@ -4,9 +4,10 @@ contactTable.id = "contactTable";
 var container = document.getElementById('container');
 container.appendChild(contactTable);
 
+var dataset = fetch();
+
 window.onload = function () {
 
-    var dataset = fetch();
     if (dataset === "DNE")
     {
         contactTable.innerHTML = "No contacts currently exist.";
@@ -15,7 +16,7 @@ window.onload = function () {
         contactTable.innerHTML = "";
         for (var item in dataset)
         {
-            buildContact(item);
+            contactTable.appendChild(buildName(item));
         }
     }
 };
@@ -55,7 +56,7 @@ function buildContact(contactData)
                     <td>Birthday: ${contactData.birthday}</td>
                 </tr>
                 <tr>
-                    <td>Linked Contacts: ${contactData.linked}</td>
+                    <td>Linked Contacts: ${linkedForHome(contactData.linked)}</td>
                 </tr>
                 <tr>
                     <td><button type="button" onclick="sendToUpdate(${contactData.id})" id='sendToUpdate'>Update Contact</button></td>
@@ -68,6 +69,49 @@ function buildContact(contactData)
 
     contactHolder.appendChild(contact);
     row.appendChild(contactHolder);
-    contactTable.appendChild(row);
+    return row;
+}
+
+function buildName(contactData)
+{
+    var row = document.createElement('tr');
+    var contactHolder = document.createElement('td');
+
+    var contact = document.createElement('div');
+    contact.innerHTML = `
+                <tr>
+                    <td id="${contactData.id}" onclick="injectContact(${contactData})">${contactData.name}</td>
+                </tr>
+        `;
+    contactHolder.appendChild(contact);
+    row.appendChild(contactHolder);
+    return row;
+}
+
+function injectContact(contactData)
+{
+    var td = document.getElementById(contactData.id);
+    td.innerHTML = "";
+    td.appendChild(buildContact(contactData));
+}
+
+function linkedForHome(linkedID)
+{
+    var linkedIDs = linkedID.split(" ");
+
+    var ul = document.createElement("ul");
+
+    for (var item in linkedIDs)
+    {
+        for (var data in dataset)
+        {
+            if (data.id === item) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(data.name));
+                ul.appendChild(li);
+            }
+        }
+    }
+    return ul;
 }
 

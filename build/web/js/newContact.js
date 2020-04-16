@@ -3,6 +3,43 @@ var createNew = document.getElementById('create');
 createNew.onclick = function () {
 
     console.log("NEW CONTACT SUBMIT");
+
+    var dataSet = fetch();
+    var linkedString = document.getElementById('linked').value;
+    var linkedIDs;
+    var idString;
+    
+    if(linkedString.includes(",") !== undefined)
+    {
+        linkedString = linkedString.split(",");
+        
+        for (var link in linkedString)
+        {
+            for (var data in dataSet)
+            {
+                if (data.name === link)
+                {
+                    linkedIDs.push(data.id);
+                }
+            }
+        }
+    }
+    
+    console.log("LINKED IDS: {" + linkedIDs + "}");
+
+    try {
+        if (linkedIDs.join(" ") === undefined)
+        {
+            idString = "";
+        } else
+        {
+            idString = linkedIDs.join(" ");
+        }
+    } catch (err) {
+        console.log(err.message);
+        idString = "";
+    }
+
     var contact = {
         id: getID(),
         name: document.getElementById('name').value,
@@ -13,10 +50,10 @@ createNew.onclick = function () {
         state: document.getElementById('state').value,
         zip: document.getElementById('zip').value,
         bday: document.getElementById('bday').value,
-        linked: ""
+        linked: idString
     };
 
-    //sendContact(contact);
+    sendContact(contact);
 //make API call to send data to the db
 };
 
