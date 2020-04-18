@@ -1,7 +1,7 @@
 window.onload = function () {
 
     let ID = sessionStorage.getItem('ToBeUpdated');
-    var dataset = fetch();
+    var dataset = fetchData();
     var updateData;
 
     if (dataset === "DNE")
@@ -37,7 +37,7 @@ function updateContact() {
     linkedString = linkedString.split(",");
     var linkedIDs;
 
-    var dataSet = fetch();
+    var dataSet = fetchData();
     for (var link in linkedString)
     {
         for (var data in dataSet)

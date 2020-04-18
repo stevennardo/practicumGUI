@@ -4,22 +4,27 @@ contactTable.id = "contactTable";
 var container = document.getElementById('container');
 container.appendChild(contactTable);
 
-var dataset = fetch();
+window.addEventListener('load', (event) => {
 
-window.onload = function () {
+    var dataset = fetchData();
+    console.log(dataset);
 
-    if (dataset === "DNE")
+    try
     {
-        contactTable.innerHTML = "No contacts currently exist.";
-    } else
-    {
-        contactTable.innerHTML = "";
-        for (var item in dataset)
+        if (dataset[0] === undefined)
+        {} else
         {
-            contactTable.appendChild(buildName(item));
+            contactTable.innerHTML = "";
+            for (var item in dataset)
+            {
+                contactTable.appendChild(buildName(item));
+            }
         }
+    } catch (e)
+    {
+        contactTable.appendChild(document.createTextNode("No contacts currently exist."));
     }
-};
+});
 
 //TODO: Finalize linked contacts
 function buildContact(contactData)
@@ -98,20 +103,24 @@ function injectContact(contactData)
 function linkedForHome(linkedID)
 {
     var linkedIDs = linkedID.split(" ");
-
+    var dataset = fetchData();
     var ul = document.createElement("ul");
 
-    for (var item in linkedIDs)
-    {
-        for (var data in dataset)
+    try {
+        for (var item in linkedIDs)
         {
-            if (data.id === item) {
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode(data.name));
-                ul.appendChild(li);
+            for (var data in dataset)
+            {
+                if (data.id === item) {
+                    var li = document.createElement("li");
+                    li.appendChild(document.createTextNode(data.name));
+                    ul.appendChild(li);
+                }
             }
         }
+    } catch (e)
+    {
+        console.log("Catch: linkedForHome(), home_inject.js");
     }
     return ul;
 }
-

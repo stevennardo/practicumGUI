@@ -118,12 +118,14 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/fetchDataSet.js":[function(require,module,exports) {
-function fetch() {
+console.log("FETCHDATASET.js HAS BEEN IMPORTED");
+
+function fetchData() {
   var requestURL = "http://localhost:8080/fetch/"; //send API call of the user (query)
 
   var sendRequest = new XMLHttpRequest(); // Open a new connection, using the GET request on the URL endpoint
 
-  console.log("Before Open");
+  console.log("Before Open FETCH");
 
   try {
     sendRequest.open('GET', requestURL, true);
@@ -147,7 +149,7 @@ function fetch() {
         return JSON.parse(dataresponse);
       }
     } else {
-      console.log("Request Error: newContact.js");
+      console.log("Request Error: fetchDataSet.js");
     }
   };
 
@@ -181,7 +183,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52175" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

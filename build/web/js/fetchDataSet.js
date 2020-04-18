@@ -1,4 +1,6 @@
-function fetch()
+console.log("FETCHDATASET.js HAS BEEN IMPORTED");
+
+function fetchData()
 {
     var requestURL = "http://localhost:8080/fetch/";
 
@@ -6,7 +8,7 @@ function fetch()
     var sendRequest = new XMLHttpRequest();
 
 // Open a new connection, using the GET request on the URL endpoint
-    console.log("Before Open");
+    console.log("Before Open FETCH");
     try {
         sendRequest.open('GET', requestURL, true);
         console.log("Opened");
@@ -32,7 +34,7 @@ function fetch()
             }
 
         } else {
-            console.log("Request Error: newContact.js");
+            console.log("Request Error: fetchDataSet.js");
         }
 
     };

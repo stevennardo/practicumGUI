@@ -122,20 +122,22 @@ var contactTable = document.createElement('table');
 contactTable.id = "contactTable";
 var container = document.getElementById('container');
 container.appendChild(contactTable);
-var dataset = fetch();
+window.addEventListener('load', function (event) {
+  var dataset = fetchData();
+  console.log(dataset);
 
-window.onload = function () {
-  if (dataset === "DNE") {
-    contactTable.innerHTML = "No contacts currently exist.";
-  } else {
-    contactTable.innerHTML = "";
+  try {
+    if (dataset[0] === undefined) {} else {
+      contactTable.innerHTML = "";
 
-    for (var item in dataset) {
-      contactTable.appendChild(buildName(item));
+      for (var item in dataset) {
+        contactTable.appendChild(buildName(item));
+      }
     }
+  } catch (e) {
+    contactTable.appendChild(document.createTextNode("No contacts currently exist."));
   }
-}; //TODO: Finalize linked contacts
-
+}); //TODO: Finalize linked contacts
 
 function buildContact(contactData) {
   var row = document.createElement('tr');
@@ -165,16 +167,21 @@ function injectContact(contactData) {
 
 function linkedForHome(linkedID) {
   var linkedIDs = linkedID.split(" ");
+  var dataset = fetchData();
   var ul = document.createElement("ul");
 
-  for (var item in linkedIDs) {
-    for (var data in dataset) {
-      if (data.id === item) {
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(data.name));
-        ul.appendChild(li);
+  try {
+    for (var item in linkedIDs) {
+      for (var data in dataset) {
+        if (data.id === item) {
+          var li = document.createElement("li");
+          li.appendChild(document.createTextNode(data.name));
+          ul.appendChild(li);
+        }
       }
     }
+  } catch (e) {
+    console.log("Catch: linkedForHome(), home_inject.js");
   }
 
   return ul;
@@ -207,7 +214,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52175" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57989" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
