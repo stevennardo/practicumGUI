@@ -1,6 +1,6 @@
 function deleteContact(id)
 {
-    var requestURL = "http://localhost:8080/delete/?id=" + id;
+    var requestURL = "http://http://3.22.225.249:8080/delete/?id=" + id;
 
     //send API call of the user (query)
     var sendRequest = new XMLHttpRequest();

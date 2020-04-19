@@ -2,7 +2,7 @@ console.log("FETCHDATASET.js HAS BEEN IMPORTED");
 
 function fetchData()
 {
-    var requestURL = "http://localhost:8080/fetch/";
+    var requestURL = "http://3.22.225.249:8080/fetch";
 
 //send API call of the user (query)
     var sendRequest = new XMLHttpRequest();

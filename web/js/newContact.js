@@ -71,7 +71,7 @@ function sendContact(contact)
 {
     //******* DUMMY URL THIS CODE WILL NOT WORK
     //awaiting legitimate GCP URL
-    var requestURL = "http://localhost:8080/create/?"
+    var requestURL = "http://http://3.22.225.249:8080/create?"
             + "id=" + contact.id
             + "&name=" + contact.name
             + "&number=" + contact.number
