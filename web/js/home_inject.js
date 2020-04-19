@@ -6,24 +6,18 @@ container.appendChild(contactTable);
 
 window.addEventListener('load', (event) => {
 
-    var dataset = fetchData();
-    console.log(dataset);
-
-    try
+    fetchData();
+    var dataset = JSON.parse(localStorage.getItem('dataresponse'));  
+            
+    console.log(dataset[0]);
+    
+    document.getElementById("contactTable").innerHTML = "";
+    for (var x=0; x<dataset.length; x++)
     {
-        if (dataset[0] === undefined)
-        {} else
-        {
-            contactTable.innerHTML = "";
-            for (var item in dataset)
-            {
-                contactTable.appendChild(buildName(item));
-            }
-        }
-    } catch (e)
-    {
-        contactTable.appendChild(document.createTextNode("No contacts currently exist."));
+        console.log(dataset[x].name);
+        contactTable.appendChild(buildName(dataset[x]));
     }
+
 });
 
 //TODO: Finalize linked contacts
@@ -64,10 +58,10 @@ function buildContact(contactData)
                     <td>Linked Contacts: ${linkedForHome(contactData.linked)}</td>
                 </tr>
                 <tr>
-                    <td><button type="button" onclick="sendToUpdate(${contactData.id})" id='sendToUpdate'>Update Contact</button></td>
+                    <td><button type="button" onclick="sendToUpdate('${contactData.id}')" id='sendToUpdate'>Update Contact</button></td>
                 </tr>
                 <tr>
-                    <td><button type="button" onclick="deleteContact(${contactData.id})" id='delete'>Delete Contact</button></td>
+                    <td><button type="button" onclick="deleteContact('${contactData.id}')" id='delete'>Delete Contact</button></td>
                 </tr>
             </table>
 `;
@@ -80,15 +74,14 @@ function buildContact(contactData)
 function buildName(contactData)
 {
     var row = document.createElement('tr');
-    var contactHolder = document.createElement('td');
-
-    var contact = document.createElement('div');
-    contact.innerHTML = `
-                <tr>
-                    <td id="${contactData.id}" onclick="injectContact(${contactData})">${contactData.name}</td>
-                </tr>
-        `;
-    contactHolder.appendChild(contact);
+    var contactHolder = document.createElement('td'); 
+        contactHolder.id = contactData.id; 
+        contactHolder.addEventListener("click", function(){
+            injectContact(contactData)
+        });
+        var name = document.createTextNode(contactData.name);
+        
+    contactHolder.appendChild(name);
     row.appendChild(contactHolder);
     return row;
 }

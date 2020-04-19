@@ -123,19 +123,14 @@ contactTable.id = "contactTable";
 var container = document.getElementById('container');
 container.appendChild(contactTable);
 window.addEventListener('load', function (event) {
-  var dataset = fetchData();
-  console.log(dataset);
+  fetchData();
+  var dataset = JSON.parse(localStorage.getItem('dataresponse'));
+  console.log(dataset[0]);
+  document.getElementById("contactTable").innerHTML = "";
 
-  try {
-    if (dataset[0] === undefined) {} else {
-      contactTable.innerHTML = "";
-
-      for (var item in dataset) {
-        contactTable.appendChild(buildName(item));
-      }
-    }
-  } catch (e) {
-    contactTable.appendChild(document.createTextNode("No contacts currently exist."));
+  for (var x = 0; x < dataset.length; x++) {
+    console.log(dataset[x].name);
+    contactTable.appendChild(buildName(dataset[x]));
   }
 }); //TODO: Finalize linked contacts
 
@@ -143,7 +138,7 @@ function buildContact(contactData) {
   var row = document.createElement('tr');
   var contactHolder = document.createElement('td');
   var contact = document.createElement('div');
-  contact.innerHTML = "\n<table id='newcontact'>\n                \n                <tr>\n                    <td>Name: ".concat(contactData.name, "</td>\n                </tr>\n                <tr>\n                    <td>Number: ").concat(contactData.number, "</td>\n                </tr>\n                <tr>\n                    <td>Email: ").concat(contactData.email, "</td>\n                </tr>\n                <tr>\n                    <td>Address: ").concat(contactData.address, "</td>\n                </tr>\n                <tr>\n                    <td>City: ").concat(contactData.city, "</td>   \n                </tr>\n                <tr>\n                    <td>State: ").concat(contactData.state, "</td>\n                </tr>\n                <tr>\n                    <td>Zip Code: ").concat(contactData.zip, "</td>  \n                </tr>\n                <tr>\n                    <td>Birthday: ").concat(contactData.birthday, "</td>\n                </tr>\n                <tr>\n                    <td>Linked Contacts: ").concat(linkedForHome(contactData.linked), "</td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"sendToUpdate(").concat(contactData.id, ")\" id='sendToUpdate'>Update Contact</button></td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"deleteContact(").concat(contactData.id, ")\" id='delete'>Delete Contact</button></td>\n                </tr>\n            </table>\n");
+  contact.innerHTML = "\n<table id='newcontact'>\n                \n                <tr>\n                    <td>Name: ".concat(contactData.name, "</td>\n                </tr>\n                <tr>\n                    <td>Number: ").concat(contactData.number, "</td>\n                </tr>\n                <tr>\n                    <td>Email: ").concat(contactData.email, "</td>\n                </tr>\n                <tr>\n                    <td>Address: ").concat(contactData.address, "</td>\n                </tr>\n                <tr>\n                    <td>City: ").concat(contactData.city, "</td>   \n                </tr>\n                <tr>\n                    <td>State: ").concat(contactData.state, "</td>\n                </tr>\n                <tr>\n                    <td>Zip Code: ").concat(contactData.zip, "</td>  \n                </tr>\n                <tr>\n                    <td>Birthday: ").concat(contactData.birthday, "</td>\n                </tr>\n                <tr>\n                    <td>Linked Contacts: ").concat(linkedForHome(contactData.linked), "</td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"sendToUpdate('").concat(contactData.id, "')\" id='sendToUpdate'>Update Contact</button></td>\n                </tr>\n                <tr>\n                    <td><button type=\"button\" onclick=\"deleteContact('").concat(contactData.id, "')\" id='delete'>Delete Contact</button></td>\n                </tr>\n            </table>\n");
   contactHolder.appendChild(contact);
   row.appendChild(contactHolder);
   return row;
@@ -152,9 +147,12 @@ function buildContact(contactData) {
 function buildName(contactData) {
   var row = document.createElement('tr');
   var contactHolder = document.createElement('td');
-  var contact = document.createElement('div');
-  contact.innerHTML = "\n                <tr>\n                    <td id=\"".concat(contactData.id, "\" onclick=\"injectContact(").concat(contactData, ")\">").concat(contactData.name, "</td>\n                </tr>\n        ");
-  contactHolder.appendChild(contact);
+  contactHolder.id = contactData.id;
+  contactHolder.addEventListener("click", function () {
+    injectContact(contactData);
+  });
+  var name = document.createTextNode(contactData.name);
+  contactHolder.appendChild(name);
   row.appendChild(contactHolder);
   return row;
 }
@@ -214,7 +212,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

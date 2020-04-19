@@ -1,13 +1,13 @@
+window.addEventListener('load', (event) => {
 var contactTable = document.createElement('table');
 contactTable.id = "contactTable";
 
 var container = document.getElementById('container');
 container.appendChild(contactTable);
-
-window.addEventListener('load', (event) => {
-
-    var dataset = fetchData();
-    console.log(dataset);
+    fetchData();
+    var dataset = JSON.parse(sessionStorage.getItem('dataresponse'));  
+            
+    console.log(dataset[0]);
 
     try
     {
@@ -15,9 +15,10 @@ window.addEventListener('load', (event) => {
         {} else
         {
             contactTable.innerHTML = "";
-            for (var item in dataset)
+            for (var x=0; x<dataset.length; x++)
             {
-                contactTable.appendChild(buildName(item));
+                console.log(dataset[x].name);
+                contactTable.appendChild(buildName(dataset[x]));
             }
         }
     } catch (e)
@@ -80,15 +81,12 @@ function buildContact(contactData)
 function buildName(contactData)
 {
     var row = document.createElement('tr');
-    var contactHolder = document.createElement('td');
-
-    var contact = document.createElement('div');
-    contact.innerHTML = `
-                <tr>
-                    <td id="${contactData.id}" onclick="injectContact(${contactData})">${contactData.name}</td>
-                </tr>
-        `;
-    contactHolder.appendChild(contact);
+    var contactHolder = document.createElement('td'); 
+        contactHolder.id = contactData.id; 
+        contactHolder.onclick = injectContact(contactData); 
+        var name = document.createTextNode(contactData.name);
+        
+    contactHolder.appendChild(name);
     row.appendChild(contactHolder);
     return row;
 }

@@ -10,7 +10,7 @@ function fetchData()
 // Open a new connection, using the GET request on the URL endpoint
     console.log("Before Open FETCH");
     try {
-        sendRequest.open('GET', requestURL, true);
+        sendRequest.open('GET', requestURL, false);
         console.log("Opened");
     } catch (e)
     {
@@ -23,15 +23,10 @@ function fetchData()
 
         if (sendRequest.status >= 200 && sendRequest.status < 400)
         {
-            var dataresponse = this.response;
+            var dataresponse = JSON.parse(this.response);;
             console.log(dataresponse);
-            if (dataresponse[0].name === "DNE")
-            {
-                return "DNE";
-            } else
-            {
-                return JSON.parse(dataresponse);
-            }
+            localStorage.setItem('dataresponse', this.response);
+            //return dataresponse;
 
         } else {
             console.log("Request Error: fetchDataSet.js");

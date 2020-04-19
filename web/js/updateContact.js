@@ -1,32 +1,32 @@
 window.onload = function () {
 
-    let ID = sessionStorage.getItem('ToBeUpdated');
-    var dataset = fetchData();
+    let ID = localStorage.getItem('ToBeUpdated');
+    console.log("Update ID: " + ID);
+
+    fetchData();
+    var dataset = JSON.parse(localStorage.getItem('dataresponse')); 
+    
+    console.log("Dataset: " + dataset[0].name);
+    
     var updateData;
 
-    if (dataset === "DNE")
-    {
-        document.getElementById('confirm').innerHTML = "No contacts currently exist.";
-    } else
-    {
-        for (var item in dataset)
+    for (var x=0; x<dataset.length; x++)
         {
-            if (ID === item.id)
+            if (ID === dataset[x].id)
             {
-                updateData = item;
+                updateData = dataset[x];
             }
         }
-    }
 
-    document.getElementById('name').value = item.name;
-    document.getElementById('number').value = item.number;
-    document.getElementById('email').value = item.email;
-    document.getElementById('address').value = item.address;
-    document.getElementById('city').value = item.city;
-    document.getElementById('state').value = item.state;
-    document.getElementById('zip').value = item.zip;
-    document.getElementById('bday').value = item.bday;
-    document.getElementById('linked').value = item.linked;
+    document.getElementById('name').value = updateData.name;
+    document.getElementById('number').value = updateData.number;
+    document.getElementById('email').value = updateData.email;
+    document.getElementById('address').value = updateData.address;
+    document.getElementById('city').value = updateData.city;
+    document.getElementById('state').value = updateData.state;
+    document.getElementById('zip').value = updateData.zip;
+    document.getElementById('bday').value = updateData.bday;
+    document.getElementById('linked').value = updateData.linked;
 };
 
 function updateContact() {
@@ -49,8 +49,16 @@ function updateContact() {
         }
     }
 
+    try
+    {
+        var sendLinked = linkedIDs.join(" ");
+    }catch (e)
+    {
+        var sendLinked = "";
+    }
+
     var contact = {
-        id: sessionStorage.getItem('ToBeUpdated'),
+        id: localStorage.getItem('ToBeUpdated'),
         name: document.getElementById('name').value,
         number: document.getElementById('number').value,
         email: document.getElementById('email').value,
@@ -59,19 +67,19 @@ function updateContact() {
         state: document.getElementById('state').value,
         zip: document.getElementById('zip').value,
         bday: document.getElementById('bday').value,
-        linked: linkedIDs.join(" ")
+        linked: sendLinked
     };
 
-    updateContact(contact);
+    updateContactSend(contact);
 //make API call to send data to the db
 }
 ;
 
-function updateContact(contact)
+function updateContactSend(contact)
 {
     //******* DUMMY URL THIS CODE WILL NOT WORK
     //awaiting legitimate GCP URL
-    var requestURL = "http://http://3.22.225.249:8080/update?"
+    var requestURL = "http://3.22.225.249:8080/update?"
             + "id=" + contact.id
             + "&name=" + contact.name
             + "&number=" + contact.number
@@ -105,7 +113,7 @@ function updateContact(contact)
         if (sendRequest.status >= 200 && sendRequest.status < 400)
         {
             console.log(this.response);
-            document.getElementById('confirm').appendChild(document.createTextNode("Contact Deleted"));
+            document.getElementById('confirm').appendChild(document.createTextNode("Contact Updated"));
         } else {
             console.log("Request Error: updateContact.js");
         }

@@ -119,7 +119,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/delete.js":[function(require,module,exports) {
 function deleteContact(id) {
-  var requestURL = "http://localhost:8080/delete/?id=" + id; //send API call of the user (query)
+  var requestURL = "http://3.22.225.249:8080/delete?id=" + id; //send API call of the user (query)
 
   var sendRequest = new XMLHttpRequest(); // Open a new connection, using the GET request on the URL endpoint
 
@@ -174,7 +174,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

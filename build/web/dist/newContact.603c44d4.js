@@ -178,7 +178,7 @@ createNew.onclick = function () {
 function sendContact(contact) {
   //******* DUMMY URL THIS CODE WILL NOT WORK
   //awaiting legitimate GCP URL
-  var requestURL = "http://localhost:8080/create/?" + "id=" + contact.id + "&name=" + contact.name + "&number=" + contact.number + "&email=" + contact.email + "&address=" + contact.address + "&city=" + contact.city + "&state=" + contact.state + "&zip=" + contact.zip + "&bday=" + contact.bday + "&linked=" + contact.linked; //send API call of the user (query)
+  var requestURL = "http://3.22.225.249:8080/create?" + "id=" + contact.id + "&name=" + contact.name + "&number=" + contact.number + "&email=" + contact.email + "&address=" + contact.address + "&city=" + contact.city + "&state=" + contact.state + "&zip=" + contact.zip + "&bday=" + contact.bday + "&linked=" + contact.linked; //send API call of the user (query)
 
   var sendRequest = new XMLHttpRequest(); // Open a new connection, using the GET request on the URL endpoint
 
@@ -238,7 +238,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

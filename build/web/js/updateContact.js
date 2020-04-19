@@ -71,7 +71,7 @@ function updateContact(contact)
 {
     //******* DUMMY URL THIS CODE WILL NOT WORK
     //awaiting legitimate GCP URL
-    var requestURL = "http://http://3.22.225.249:8080/update?"
+    var requestURL = "http://3.22.225.249:8080/update?"
             + "id=" + contact.id
             + "&name=" + contact.name
             + "&number=" + contact.number

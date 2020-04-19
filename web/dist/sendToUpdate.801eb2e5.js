@@ -119,7 +119,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/sendToUpdate.js":[function(require,module,exports) {
 function sendToUpdate(id) {
-  sessionStorage.setItem('ToBeUpdated', id);
+  localStorage.setItem('ToBeUpdated', id);
   window.location.href = "updateContact.html";
 }
 },{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -150,7 +150,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -118,20 +118,22 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/home_inject.js":[function(require,module,exports) {
-var contactTable = document.createElement('table');
-contactTable.id = "contactTable";
-var container = document.getElementById('container');
-container.appendChild(contactTable);
 window.addEventListener('load', function (event) {
-  var dataset = fetchData();
-  console.log(dataset);
+  var contactTable = document.createElement('table');
+  contactTable.id = "contactTable";
+  var container = document.getElementById('container');
+  container.appendChild(contactTable);
+  fetchData();
+  var dataset = JSON.parse(sessionStorage.getItem('dataresponse'));
+  console.log(dataset[0]);
 
   try {
     if (dataset[0] === undefined) {} else {
       contactTable.innerHTML = "";
 
-      for (var item in dataset) {
-        contactTable.appendChild(buildName(item));
+      for (var x = 0; x < dataset.length; x++) {
+        console.log(dataset[x].name);
+        contactTable.appendChild(buildName(dataset[x]));
       }
     }
   } catch (e) {
@@ -152,9 +154,10 @@ function buildContact(contactData) {
 function buildName(contactData) {
   var row = document.createElement('tr');
   var contactHolder = document.createElement('td');
-  var contact = document.createElement('div');
-  contact.innerHTML = "\n                <tr>\n                    <td id=\"".concat(contactData.id, "\" onclick=\"injectContact(").concat(contactData, ")\">").concat(contactData.name, "</td>\n                </tr>\n        ");
-  contactHolder.appendChild(contact);
+  contactHolder.id = contactData.id;
+  contactHolder.onclick = injectContact(contactData);
+  var name = document.createTextNode(contactData.name);
+  contactHolder.appendChild(name);
   row.appendChild(contactHolder);
   return row;
 }
@@ -214,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59691" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60072" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
