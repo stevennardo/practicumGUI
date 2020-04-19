@@ -1,12 +1,23 @@
 {
-  "name": "practicumFinalProjNardo",
+  "name": "practicumfinalprojnardo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "./js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Steven Nardo",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevennardo/practicumGUI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stevennardo/practicumGUI/issues"
+  },
+  "homepage": "https://github.com/stevennardo/practicumGUI#readme",
+  "description": "Practicum Final Project",
+  "dependencies": {
+    "vcards-js": "^2.10.0"
+  }
 }

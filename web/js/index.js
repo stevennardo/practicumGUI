@@ -1,0 +1,1 @@
+var vCardsJS = require('vcards-js');

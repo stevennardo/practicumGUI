@@ -28,4 +28,5 @@ function deleteContact(id)
 
     };
     sendRequest.send();
+    window.location.href = "index.html";
 }

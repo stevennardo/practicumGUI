@@ -7,13 +7,12 @@ container.appendChild(contactTable);
 window.addEventListener('load', (event) => {
 
     fetchData();
-    var dataset = JSON.parse(localStorage.getItem('dataresponse'));  
-            
+    var dataset = JSON.parse(localStorage.getItem('dataresponse'));
+
     console.log(dataset[0]);
-    
+
     document.getElementById("contactTable").innerHTML = "";
-    for (var x=0; x<dataset.length; x++)
-    {
+    for (var x = 0; x < dataset.length; x++) {
         console.log(dataset[x].name);
         contactTable.appendChild(buildName(dataset[x]));
     }
@@ -21,8 +20,7 @@ window.addEventListener('load', (event) => {
 });
 
 //TODO: Finalize linked contacts
-function buildContact(contactData)
-{
+function buildContact(contactData) {
     var row = document.createElement('tr');
     var contactHolder = document.createElement('td');
 
@@ -63,6 +61,9 @@ function buildContact(contactData)
                 <tr>
                     <td><button type="button" onclick="deleteContact('${contactData.id}')" id='delete'>Delete Contact</button></td>
                 </tr>
+                <tr>
+                    <td><button type="button" onclick="makeVCard('${contactData.id}')" id='vcard'>Export Contact</button></td>
+                </tr>
             </table>
 `;
 
@@ -71,39 +72,34 @@ function buildContact(contactData)
     return row;
 }
 
-function buildName(contactData)
-{
+function buildName(contactData) {
     var row = document.createElement('tr');
-    var contactHolder = document.createElement('td'); 
-        contactHolder.id = contactData.id; 
-        contactHolder.addEventListener("click", function(){
-            injectContact(contactData)
-        });
-        var name = document.createTextNode(contactData.name);
-        
+    var contactHolder = document.createElement('td');
+    contactHolder.id = contactData.id;
+    contactHolder.addEventListener("click", function () {
+        injectContact(contactData)
+    });
+    var name = document.createTextNode(contactData.name);
+
     contactHolder.appendChild(name);
     row.appendChild(contactHolder);
     return row;
 }
 
-function injectContact(contactData)
-{
+function injectContact(contactData) {
     var td = document.getElementById(contactData.id);
     td.innerHTML = "";
     td.appendChild(buildContact(contactData));
 }
 
-function linkedForHome(linkedID)
-{
+function linkedForHome(linkedID) {
     var linkedIDs = linkedID.split(" ");
     var dataset = fetchData();
     var ul = document.createElement("ul");
 
     try {
-        for (var item in linkedIDs)
-        {
-            for (var data in dataset)
-            {
+        for (var item in linkedIDs) {
+            for (var data in dataset) {
                 if (data.id === item) {
                     var li = document.createElement("li");
                     li.appendChild(document.createTextNode(data.name));
@@ -111,8 +107,7 @@ function linkedForHome(linkedID)
                 }
             }
         }
-    } catch (e)
-    {
+    } catch (e) {
         console.log("Catch: linkedForHome(), home_inject.js");
     }
     return ul;
