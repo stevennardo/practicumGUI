@@ -61,11 +61,12 @@ function buildContact(contactData) {
                 <tr>
                     <td><button type="button" onclick="deleteContact('${contactData.id}')" id='delete'>Delete Contact</button></td>
                 </tr>
-                <tr>
-                    <td><button type="button" onclick="makeVCard('${contactData.id}')" id='vcard'>Export Contact</button></td>
-                </tr>
+                
             </table>
 `;
+/*<tr>
+                    <td><button type="button" onclick="makeVCard('${contactData.id}')" id='vcard'>Export Contact</button></td>
+                </tr>*/
 
     contactHolder.appendChild(contact);
     row.appendChild(contactHolder);
